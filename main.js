@@ -2,9 +2,7 @@
 
 //Will be used to run the game in logical order
 function runGame() {
-    console.log(enemies[1].health);
-    updateHealth(1, 3);
-    console.log(enemies[1].health);
+    
 }
 
 //Create the hercules object
@@ -26,18 +24,26 @@ let hercules = {
         this.chosenAttackName = this.attacks[chosenAttack - 1].name;
         
     },
+    //Prints users chosen attack to the console and displays name of attack and damage to be done
     printAttack(chosenAttack) {
         prompt('You chose to use ' + this.attacks[chosenAttack]);
+        console.log(`Hercules attack did: ${this.chosenAttackDmg} damage`);
+    },
+
+    updateHerculesHealth(damageDone) {
+        hercules.health -= damageDone;
     }
 };
 
 //Create enemy object with each enemy and properties stored here
-let enemies = [
+let enemies = {
+    enemies: [
     {
         enemyNum: 1,
         name: 'Wild Dog',
         atkPower: 1,
         attacks: ['scratch', 'bite', 'tear'],
+        currentAttack: '',
         health: 5,
     },
     {
@@ -45,19 +51,22 @@ let enemies = [
         name: 'Vicious Nemean Lion',
         atkPower: 4,
         attacks: ['bite', 'leap and slash', 'slash'],
+        currentAttack: '',
         health: 15,
+    }
+    ],
+
+    //Updates health of enemy character passed in
+    updateEnemyHealth(dealtTo, damageDone) {
+    enemies.enemies[dealtTo].health -= damageDone;
+    console.log(`Enemies attack did: ${enemies.enemies[dealtTo].atkPower} damage`);
     },
-]
+    selectAttack(currentEnemy) {
+        let randomAttack = Math.floor(Math.random() * enemies.enemies[currentEnemy].attacks.length);
+        enemies.enemies[currentEnemy].currentAttack =  enemies.enemies[currentEnemy].attacks[randomAttack];
+    }
+};
 
-//Updates health of enemy character passed in
-function updateEnemyHealth(dealtTo, damageDone) {
-    enemies[dealtTo].health -= damageDone;
-}
-
-//Updates health of main character
-function updateHerculesHealth(damageDone) {
-    hercules.health -= damageDone;
-}
 //Creates the story messages in an object
 let storyObjects = {
         messages: ['"Your first mission will be to slay the ruthless Nemean Lion." - King Eurystheus', 
