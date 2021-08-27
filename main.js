@@ -12,6 +12,9 @@ function runGame() {
     hercules.restoreHealth();
     currentStoryLocation = displayStory(currentStoryLocation);
     fightTime();
+    while(currentStoryLocation < storyObjects.messages.length) {
+        currentStoryLocation = displayStory(currentStoryLocation);
+    }
 
 }
 function fightTime() {
@@ -84,7 +87,7 @@ let enemyObjects = {
     [
         {
             enemyNum: 1,
-            name: 'Vicious Nemean Lion',
+            name: 'Nemean Lion',
             atkPower: 4,
             attacks: ['bite', 'leap and slash', 'slash'],
             currentAttack: '',
@@ -128,7 +131,7 @@ let enemyObjects = {
     selectAttack() {
         let randomAttack = Math.floor(Math.random() * this.enemies[hercules.currentEnemy].attacks.length);
         this.enemies[hercules.currentEnemy].currentAttack =  this.enemies[hercules.currentEnemy].attacks[randomAttack];
-        alert(`${this.enemies[hercules.currentEnemy].name}'s chose to use ${this.enemies[hercules.currentEnemy].currentAttack}, this does ${this.enemies[hercules.currentEnemy].atkPower} damage to Hercules`);
+        alert(`${this.enemies[hercules.currentEnemy].name} chose to use ${this.enemies[hercules.currentEnemy].currentAttack}, this does ${this.enemies[hercules.currentEnemy].atkPower} damage to Hercules`);
     }
 };
 
@@ -137,9 +140,16 @@ let storyObjects = {
         messages: 
         ['"Your first mission will be an essential to our success, it is to slay the ruthless Nemean Lion." - King Eurystheus', 
         'Fantastic job! Now that you have completed the mission, you can head back to the King to find out what is in store next!',
-        '"Glad to hear you have done well, next I ask you to defeat the nine-headed Lernaean Hydra, I suspect that you are the only one for the job. Do not let us down."',
+        '"Glad to hear you have done well, next I ask you to defeat the nine-headed Lernaean Hydra, I suspect that you are the only one for the job. Do not let us down." - King Eurystheus',
         'I knew I could trust you to take that BEAST down! Go see the medics to help you out with your injuries.',
-        'Now that you are better, I need you to do one last final mission. I have taken a liking to the guard dog of the underworld, Cerberus, I need you to capture him.'
+        '"Now that you are better, I need you to do one last final mission. I have taken a liking to the guard dog of the underworld, Cerberus, I need you to capture him." - King Eurystheus',
+        'You have returned to the Kings village to a parade hosted by all of the citizens...',
+        'After taking a look around, you realize this is all for you',
+        'After your mission all you want is a drink and some mushroom soup, but you are approached by the King who says...',
+        '"You are the best God for the job that we could have found."',
+        '"You were able to defeat all of those large monsters, and have made an overwhelming impact on decreasing the stress of our citizens."',
+        '"And for that I am ever in your favor, if you need anything from us, please do not be hesitant to reach out."',
+        'After speaking to the King, you return to your bed to find thank you letters and dragon teeth from the community, thanking you for your service.'
         ]
     ,
     
