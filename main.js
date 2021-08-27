@@ -7,12 +7,12 @@ function runGame() {
 
 //Create the hercules object
 let hercules = {
-    health: 30,
+    health: 20,
     atkPower: 5,
     attacks: [
         {name: 'punch(light attack: 2 dmg)', damage: 2},
         {name: 'stab(normal attack: 5 dmg)', damage: 5},
-        {name: 'flying dagger: 6 dmg', damage: 6}
+        {name: 'flying dagger(heavy attack: 6 dmg)', damage: 6}
     ],
     selectAttack() {
         alert('What attack will you use?');
@@ -20,9 +20,26 @@ let hercules = {
 };
 // Creation of the first enemy
 let wildDog = {
+    enemyNum: 1,
     name: 'Wild Dog',
     atkPower: 1,
-    attacks: ['scratch', 'bite', 'tear']
+    attacks: ['scratch', 'bite', 'tear'],
+    health: 5,
+
+    updateHealth(damageDone) {
+        this.health -= damageDone;
+    }
+};
+let nemeanLion = {
+    enemyNum: 2,
+    name: 'Vicious Nemean Lion',
+    atkPower: 4,
+    attacks: ['bite', 'leap and slash', 'slash'],
+    health: 15,
+
+    updateHealth(damageDone) {
+        this.health -= damageDone;
+    }
 };
 
 //Creates the story messages in an object
@@ -40,7 +57,7 @@ let storyObjects = {
     //Prints the messages at x, where x is the point of the story you are at which is saved by a variable in the 
     printStoryAlert(x) {
         alert(this.messages[x]);
-        return x++;
+        return x += 1;
     }
 };
 
