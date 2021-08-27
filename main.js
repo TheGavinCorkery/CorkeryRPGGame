@@ -17,6 +17,8 @@ function runGame() {
     }
 
 }
+
+//Completes all aspects of a fight for hercules and the enemy
 function fightTime() {
     alert(`You are about to fight ${enemyObjects.enemies[hercules.currentEnemy].name}`);
     while(enemyObjects.enemies[hercules.currentEnemy].health > 0) {
@@ -33,6 +35,7 @@ function fightTime() {
     hercules.currentEnemy++;
 }
 
+//Displays the current story message
 function displayStory(currentStoryLocation) {
     currentStoryLocation = storyObjects.printStoryAlert(currentStoryLocation);
     return currentStoryLocation;
@@ -41,7 +44,7 @@ function displayStory(currentStoryLocation) {
 //Create the hercules object
 let hercules = {
     alive: true,
-    health: 30,
+    health: 20,
     atkPower: 5,
     chosenAttackDmg: 0,
     chosenAttackName: '',
@@ -51,11 +54,15 @@ let hercules = {
         {name: 'stab(normal attack: 5 dmg)', damage: 5},
         {name: 'flying dagger(heavy attack: 6 dmg)', damage: 6}
     ],
+
+    //Completes all steps that makes up hercules's attacks
     Attack() {
         this.selectAttack();
         this.printAttack(this.chosenAttack);
         enemyObjects.updateEnemyHealth(this.currentEnemy, this.chosenAttackDmg);
     },
+    
+    //Gets user input to choose their attack
     selectAttack() {
         this.chosenAttack = prompt('What attack would you like to use? \n1. ' + this.attacks[0].name + '\n2. ' + 
             this.attacks[1].name + '\n3. ' + this.attacks[2].name);
@@ -70,12 +77,15 @@ let hercules = {
         console.log(`Hercules attack did: ${this.chosenAttackDmg} damage`);
     },
 
+    //Used to change hercules's health
     updateHerculesHealth(damageDone) {
         this.health -= damageDone;
         console.log(`Hercules health is now: ${this.health}`);
     },
+
+    //Restores hercules health back to full
     restoreHealth() {
-        this.health = 30;
+        this.health = 20;
         alert('You have been healed by the doctor! You are now at full health!');
         console.log(`Hercules health is now: ${this.health}`);
     }
@@ -112,6 +122,7 @@ let enemyObjects = {
         }
     ],
 
+    //Completes all elements that makes up each attack
     completeEnemyAttack() {
         this.selectAttack();
         console.log(`${this.enemies[hercules.currentEnemy].name}'s attack did: ${this.enemies[hercules.currentEnemy].atkPower} damage.`)
@@ -128,6 +139,8 @@ let enemyObjects = {
         console.log(`${this.enemies[dealtTo].name}'s health is now: ${this.enemies[dealtTo].health}`);
     }
     },
+
+    //Randomly selects an attack for the enemy to use
     selectAttack() {
         let randomAttack = Math.floor(Math.random() * this.enemies[hercules.currentEnemy].attacks.length);
         this.enemies[hercules.currentEnemy].currentAttack =  this.enemies[hercules.currentEnemy].attacks[randomAttack];
