@@ -3,11 +3,19 @@
 //Will be used to run the game in logical order
 function runGame() {
     let currentStoryLocation = 0;
-    currentStoryLocation = storyObjects.printStoryAlert(currentStoryLocation);
-    alert(`You are about to fight ${enemyObjects.enemies[hercules.currentEnemy].name}`);
+    currentStoryLocation = displayStory(currentStoryLocation);
     fightTime();
+    currentStoryLocation = displayStory(currentStoryLocation);
+    currentStoryLocation = displayStory(currentStoryLocation);
+    fightTime();
+    currentStoryLocation = displayStory(currentStoryLocation);
+    hercules.restoreHealth();
+    currentStoryLocation = displayStory(currentStoryLocation);
+    fightTime();
+
 }
 function fightTime() {
+    alert(`You are about to fight ${enemyObjects.enemies[hercules.currentEnemy].name}`);
     while(enemyObjects.enemies[hercules.currentEnemy].health > 0) {
         hercules.Attack();
         if (enemyObjects.enemies[hercules.currentEnemy].health <= 0) {
@@ -19,6 +27,12 @@ function fightTime() {
             break;
         }
     }
+    hercules.currentEnemy++;
+}
+
+function displayStory(currentStoryLocation) {
+    currentStoryLocation = storyObjects.printStoryAlert(currentStoryLocation);
+    return currentStoryLocation;
 }
 
 //Create the hercules object
@@ -60,6 +74,7 @@ let hercules = {
     restoreHealth() {
         this.health = 30;
         alert('You have been healed by the doctor! You are now at full health!');
+        console.log(`Hercules health is now: ${this.health}`);
     }
 };
 
@@ -96,6 +111,7 @@ let enemyObjects = {
 
     completeEnemyAttack() {
         this.selectAttack();
+        console.log(`${this.enemies[hercules.currentEnemy].name}'s attack did: ${this.enemies[hercules.currentEnemy].atkPower} damage.`)
         hercules.updateHerculesHealth(this.enemies[hercules.currentEnemy].atkPower);
     },
 
