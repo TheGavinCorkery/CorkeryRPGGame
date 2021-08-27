@@ -2,6 +2,9 @@
 
 //Will be used to run the game in logical order
 function runGame() {
+    console.log(enemies[1].health);
+    updateHealth(1, 3);
+    console.log(enemies[1].health);
 }
 
 //Create the hercules object
@@ -27,30 +30,34 @@ let hercules = {
         prompt('You chose to use ' + this.attacks[chosenAttack]);
     }
 };
-// Creation of the first enemy
-let wildDog = {
-    enemyNum: 1,
-    name: 'Wild Dog',
-    atkPower: 1,
-    attacks: ['scratch', 'bite', 'tear'],
-    health: 5,
 
-    updateHealth(damageDone) {
-        this.health -= damageDone;
-    }
-};
-let nemeanLion = {
-    enemyNum: 2,
-    name: 'Vicious Nemean Lion',
-    atkPower: 4,
-    attacks: ['bite', 'leap and slash', 'slash'],
-    health: 15,
+//Create enemy object with each enemy and properties stored here
+let enemies = [
+    {
+        enemyNum: 1,
+        name: 'Wild Dog',
+        atkPower: 1,
+        attacks: ['scratch', 'bite', 'tear'],
+        health: 5,
+    },
+    {
+        enemyNum: 2,
+        name: 'Vicious Nemean Lion',
+        atkPower: 4,
+        attacks: ['bite', 'leap and slash', 'slash'],
+        health: 15,
+    },
+]
 
-    updateHealth(damageDone) {
-        this.health -= damageDone;
-    }
-};
+//Updates health of enemy character passed in
+function updateEnemyHealth(dealtTo, damageDone) {
+    enemies[dealtTo].health -= damageDone;
+}
 
+//Updates health of main character
+function updateHerculesHealth(damageDone) {
+    hercules.health -= damageDone;
+}
 //Creates the story messages in an object
 let storyObjects = {
         messages: ['"Your first mission will be to slay the ruthless Nemean Lion." - King Eurystheus', 
