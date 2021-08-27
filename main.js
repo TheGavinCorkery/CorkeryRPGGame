@@ -5,12 +5,20 @@ function runGame() {
     let currentStoryLocation = 0;
     currentStoryLocation = storyObjects.printStoryAlert(currentStoryLocation);
     alert(`You are about to fight ${enemyObjects.enemies[hercules.currentEnemy].name}`);
-    while(hercules.alive = true) {
-        hercules.completeUserAttack();
+    fightTime();
+}
+function fightTime() {
+    while(enemyObjects.enemies[hercules.currentEnemy].health > 0) {
+        hercules.Attack();
+        if (enemyObjects.enemies[hercules.currentEnemy].health <= 0) {
+            break;
+        }
         enemyObjects.completeEnemyAttack();
+        if (hercules.health <= 0) {
+            alert('Hercules is DEAD!');
+            break;
+        }
     }
-    
-
 }
 
 //Create the hercules object
@@ -48,10 +56,6 @@ let hercules = {
     updateHerculesHealth(damageDone) {
         this.health -= damageDone;
         console.log(`Hercules health is now: ${this.health}`);
-        if (this.health <= 0) {
-            alert('Hercules is DEAD!');
-            this.alive = false;
-        }
     },
     restoreHealth() {
         this.health = 30;
@@ -90,18 +94,25 @@ let enemyObjects = {
         }
     ],
 
+    completeEnemyAttack() {
+        this.selectAttack();
+        hercules.updateHerculesHealth(this.enemies[hercules.currentEnemy].atkPower);
+    },
+
     //Updates health of enemy character passed in
     updateEnemyHealth(dealtTo, damageDone) {
     this.enemies[dealtTo].health -= damageDone;
-    console.log(`${this.enemies[dealtTo].name}'s health is now: ${this.enemies[dealtTo].health}`);
-    if (enemyObjects.enemies[hercules.currentEnemy].health <= 0) {
+    if (this.enemies[dealtTo].health <= 0) {
+        console.log(`${this.enemies[dealtTo].name} is defeated.`);
         alert(`${this.enemies[hercules.currentEnemy].name} is defeated!`);
+    }else {
+        console.log(`${this.enemies[dealtTo].name}'s health is now: ${this.enemies[dealtTo].health}`);
     }
     },
     selectAttack() {
         let randomAttack = Math.floor(Math.random() * this.enemies[hercules.currentEnemy].attacks.length);
         this.enemies[hercules.currentEnemy].currentAttack =  this.enemies[hercules.currentEnemy].attacks[randomAttack];
-        hercules.updateHerculesHealth(this.enemies[hercules.currentEnemy].atkPower);
+        alert(`${this.enemies[hercules.currentEnemy].name}'s chose to use ${this.enemies[hercules.currentEnemy].currentAttack}, this does ${this.enemies[hercules.currentEnemy].atkPower} damage to Hercules`);
     }
 };
 
